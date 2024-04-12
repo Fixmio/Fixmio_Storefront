@@ -29,8 +29,6 @@ const nextConfig = withStoreConfig({
   },
 })
 
-// Move console.log after module.exports assignment
-module.exports = nextConfig
-
-// Log the nextConfig object after it's exported
 console.log("next.config.js", JSON.stringify(module.exports, null, 2))
+
+module.exports = nextConfig
