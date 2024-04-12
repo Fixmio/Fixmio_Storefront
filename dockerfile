@@ -1,15 +1,16 @@
 FROM node:latest
 
+# Set the working directory to /app/medusa
 WORKDIR /app/medusa
 
-COPY . .
+# Copy package.json and yarn.lock to the working directory
+COPY package.json yarn.lock ./
 
-RUN apt-get update && apt-get install -y python3 python3-pip python-is-python3
+# Install dependencies
+RUN yarn install
 
-RUN yarn global add @medusajs/medusa-cli
-
-RUN yarn
-
+# Build the application
 RUN yarn build
 
-CMD medusa migrations run && yarn start
+# Start the Next.js storefront
+CMD ["yarn", "dev"]
