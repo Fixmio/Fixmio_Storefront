@@ -1,24 +1,21 @@
-# Use Alpine Linux base image
-FROM alpine:latest
+# Set the base image to Node 17.1.0-alpine
+FROM node:17.1.0-alpine
 
-# Update package repositories and install Bash
-RUN apk update && \
-    apk add --no-cache bash
+# Set the working directory for all subsequent commands
+WORKDIR /app/storefront
 
-# Set the working directory
-WORKDIR /app/medusa
+# Copy the package.json and yarn lock files to the working directory
+COPY package.json .
+COPY yarn.* .
 
-# Copy package.json and yarn.lock to the working directory
-COPY package.json yarn.lock ./
+# Run the apk update command to update package information
+RUN apk update
 
-# Install dependencies
-RUN yarn install
+# Install the dependencies
+RUN yarn --network-timeout 1000000
 
-# Copy the rest of the application
+# Copy all files in the current directory (.) to the working directory in the container
 COPY . .
 
-# Build the application
-RUN yarn build
-
-# Command to start the Next.js storefront
-CMD ["yarn", "dev"]
+# Set the default command to run the application in development mode
+ENTRYPOINT [ "yarn", "dev"]
