@@ -1,5 +1,5 @@
-# Set the base image to Node 17.1.0-alpine
-FROM node:latest
+# Set the base image to latest Node alpine
+FROM node:alpine
 
 # Set the working directory for all subsequent commands
 WORKDIR /app/storefront
@@ -8,7 +8,7 @@ WORKDIR /app/storefront
 COPY package.json .
 COPY yarn.* .
 
-# Run the apk update command to update package information
+# Run the apk update command to update package information (only needed in Alpine)
 RUN apk update
 
 # Install the dependencies
